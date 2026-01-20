@@ -1,8 +1,9 @@
+import "dotenv/config";
+
 import http from "http";
 import { Server } from "socket.io";
 import { app } from "./app";
 import { setupSocket } from "./socket";
-import "dotenv/config";
 
 const server = http.createServer(app);
 
