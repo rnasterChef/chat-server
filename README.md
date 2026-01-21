@@ -37,3 +37,32 @@ JWT 인증을 사용해 사용자를 식별하고, Socket.IO로 실시간 메시
 ---
 
 ## 📁 프로젝트 구조
+```text
+src/
+├─ app.ts              # Express app 설정
+├─ index.ts            # HTTP + Socket.IO 서버 엔트리
+├─ socket.ts           # Socket.IO 이벤트 처리
+├─ db.ts               # Supabase client
+├─ routes/
+│   └─ messages.ts     # REST API (채팅 기록 조회)
+├─ middlewares/
+│   └─ auth.ts         # JWT 인증 미들웨어
+└─ test-client.ts      # Socket.IO 테스트용 클라이언트
+```
+
+---
+
+## 🗄 데이터베이스 스키마
+
+```sql
+create table chat_messages (
+  id uuid primary key default gen_random_uuid(),
+  room_id text not null,
+  sender_id text not null,
+  content text not null,
+  created_at timestamptz not null default now()
+);
+
+create index chat_messages_room_created_idx
+  on chat_messages(room_id, created_at desc);
+```
